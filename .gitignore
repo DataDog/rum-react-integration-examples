@@ -1,0 +1,10 @@
+bundle
+cjs
+esm
+node_modules
+coverage
+tunnel.log
+local.log
+specs.log
+/test-report/
+browserstack.err
