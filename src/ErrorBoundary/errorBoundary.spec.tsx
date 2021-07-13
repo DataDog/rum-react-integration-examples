@@ -1,5 +1,5 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import * as React from 'react';
+import { render, screen } from '@testing-library/react';
 import { ErrorBoundary } from './errorBoundary';
 
 const Throws = () => {
@@ -7,23 +7,25 @@ const Throws = () => {
 };
 
 describe('ErrorBoundary', () => {
+  let onErrorSpy: jest.Mock;
   let addErrorSpy: jest.Mock;
-  let onerror: jasmine.Spy;
 
   beforeEach(() => {
-    onerror = spyOn(window, 'onerror');
+    onErrorSpy = jest.fn();
     addErrorSpy = jest.fn();
-    window.DD_RUM = {
+
+    global.window.onerror = onErrorSpy;
+    global.window.DD_RUM = {
+      ...(global.window.DD_RUM ?? {}),
       addError: addErrorSpy,
-    } as any;
+    };
   });
 
   afterEach(() => {
-    // @ts-ignore
-    delete window.DD_RUM;
+    jest.restoreAllMocks();
   });
 
-  const ErrorRenderer = () => <h1>ERROR</h1>;
+  const ErrorRenderer = () => <h1>Pretty error displayed</h1>;
 
   it('sends errors to addError', () => {
     render(
@@ -34,8 +36,9 @@ describe('ErrorBoundary', () => {
         <Throws />
       </ErrorBoundary>
     );
-    expect(onerror).toHaveBeenCalled();
 
+    screen.getByText('Pretty error displayed');
+    expect(onErrorSpy).toHaveBeenCalled();
     expect(addErrorSpy).toHaveBeenCalledTimes(1);
   });
 });

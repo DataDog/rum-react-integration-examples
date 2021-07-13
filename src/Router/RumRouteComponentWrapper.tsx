@@ -30,18 +30,6 @@ function isReactRouterComponent(
   return isClassComponent(component) || isFunctionComponent(component);
 }
 
-function isElement(
-  element: RumRouteComponentType
-): element is React.ReactElement<any> {
-  return React.isValidElement(element);
-}
-
-function isDOMTypeElement(
-  element: RumRouteComponentType
-): element is HTMLElement {
-  return isElement(element) && typeof element.type === 'string';
-}
-
 function getComponentName(component: RumRouteComponentType): string | null {
   let maybeComponentName = null;
   if (component && isReactRouterComponent(component)) {
