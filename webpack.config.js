@@ -1,6 +1,6 @@
 const path = require('path')
 
-const webpackBase = require('../../webpack.base')
+const webpackBase = require('./webpack.base')
 
 module.exports = (_env, argv) =>
   webpackBase({

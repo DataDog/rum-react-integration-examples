@@ -1,11 +1,6 @@
 import React from 'react'
 
 import { getGlobalObject } from '@datadog/browser-core'
-import { RumPublicApi } from '@datadog/browser-rum-core'
-
-interface BrowserWindow extends Window {
-  DD_RUM?: RumPublicApi
-}
 
 interface InfoType {
   componentStack: string
@@ -54,7 +49,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   }
 
   componentDidCatch(error: Error, info: InfoType) {
-    const RumGlobal = getGlobalObject<BrowserWindow>().DD_RUM
+    const RumGlobal = getGlobalObject<Window>().DD_RUM
     if (RumGlobal) {
       RumGlobal.addError(error, info)
     }

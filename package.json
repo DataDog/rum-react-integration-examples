@@ -30,9 +30,15 @@
     "@datadog/browser-core": "2.15.1",
     "@datadog/browser-rum-core": "2.15.1"
   },
+  "resolutions": {
+      "@types/react": "16"
+  },
   "devDependencies": {
+    "@datadog/browser-core": "2.15.1",
+    "@datadog/browser-rum-core": "2.15.1",
     "@testing-library/react": "12.0.0",
     "@types/jasmine": "3.6.3",
+    "@types/jest": "^26.0.24",
     "@types/node": "^16.0.0",
     "@types/pako": "1.0.1",
     "@types/react": "16",
@@ -65,6 +71,7 @@
     "ts-loader": "8.0.18",
     "tsconfig-paths-webpack-plugin": "3.5.1",
     "typescript": "4.1.5",
-    "webpack": "5.28.0"
+    "webpack": "5.28.0",
+    "webpack-cli": "^4.7.2"
   }
 }

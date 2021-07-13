@@ -1,14 +1,6 @@
 import * as React from 'react';
 import type { RouteProps, RouteComponentProps } from 'react-router-dom';
 
-declare global {
-  interface Window {
-    DD_RUM: {
-      startView?(name?: string): void;
-    };
-  }
-}
-
 type RumRouteComponentType =
   | RouteProps['component']
   | RouteProps['children']
