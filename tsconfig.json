@@ -2,8 +2,17 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "types": ["jasmine"]
+    "types": [
+      "node"
+    ]
   },
-  "include": ["packages", "scripts", "test", ".eslintrc.js", "eslint-local-rules"],
+  "include": [
+    "packages",
+    "scripts",
+    "test",
+    "src",
+    ".eslintrc.js",
+    "eslint-local-rules"
+  ],
   "exclude": ["packages/*/cjs", "packages/*/esm", "packages/*/bundle", "test/e2e", "test/app", "developer-extension"]
 }
