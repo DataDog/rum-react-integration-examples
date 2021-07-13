@@ -8,3 +8,4 @@ local.log
 specs.log
 /test-report/
 browserstack.err
+yarn-error.log
