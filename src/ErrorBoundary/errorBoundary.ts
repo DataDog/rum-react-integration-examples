@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { getGlobalObject } from '@datadog/browser-core'
+import { getGlobalObject } from '../utils/getGlobalObject';
 
 interface InfoType {
   componentStack: string

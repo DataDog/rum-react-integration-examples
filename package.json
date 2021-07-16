@@ -25,7 +25,6 @@
     "url": "https://github.com/DataDog/rum-react-integration.git"
   },
   "peerDependencies": {
-    "@datadog/browser-core": "^2.15.1",
     "@datadog/browser-rum-core": "^2.15.1",
     "react": ">=16",
     "react-router-dom": "^5.0.0"
@@ -34,7 +33,6 @@
     "@types/react": "16"
   },
   "devDependencies": {
-    "@datadog/browser-core": "^2.15.1",
     "@datadog/browser-rum-core": "^2.15.1",
     "@testing-library/react": "12.0.0",
     "@types/jest": "^26.0.24",

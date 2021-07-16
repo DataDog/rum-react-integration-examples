@@ -16,9 +16,8 @@ describe('ErrorBoundary', () => {
 
     global.window.onerror = onErrorSpy;
     global.window.DD_RUM = {
-      ...(global.window.DD_RUM ?? {}),
       addError: addErrorSpy,
-    };
+    } as any;
   });
 
   afterEach(() => {

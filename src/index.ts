@@ -5,7 +5,7 @@ export { RumRoute } from './Router'
 
 declare global {
   interface Window {
-    DD_RUM: RumPublicApi & {
+    DD_RUM?: RumPublicApi & {
       startView?(name?: string): void;
     };
   }
