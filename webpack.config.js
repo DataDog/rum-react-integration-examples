@@ -7,4 +7,18 @@ module.exports = (_env, argv) =>
     mode: argv.mode,
     entry: path.resolve(__dirname, 'src/index.ts'),
     filename: 'datadog-rum-react.js',
+    externals: {
+    'react': {
+      commonjs: 'react',
+      commonjs2: 'react',
+      amd: 'React',
+      root: 'React'
+    },
+    'react-dom': {
+      commonjs: 'react-dom',
+      commonjs2: 'react-dom',
+      amd: 'ReactDOM',
+      root: 'ReactDOM'
+    }    
+  },
   })

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo } from 'react';
 import { Route } from 'react-router-dom';
 import type { RouteProps } from 'react-router-dom';
 
@@ -12,10 +12,10 @@ export const RumRoute = ({
   render,
   ...otherProps
 }: RumRouteProps) => {
-  const rumComponent = React.useMemo(() => {
+  const RumComponent = useMemo(() => {
     // this is react-router priority
     return withRum(children ?? component ?? render);
   }, [children, component, render]);
 
-  return <Route {...otherProps}>{rumComponent}</Route>;
+  return <Route {...otherProps} component={RumComponent} />;
 };

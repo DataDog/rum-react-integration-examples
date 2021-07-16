@@ -17,7 +17,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "react-router-dom": "^5.0.0",
     "tslib": "^1.10.0"
   },
   "repository": {
@@ -25,15 +24,17 @@
     "url": "https://github.com/DataDog/rum-react-integration.git"
   },
   "peerDependencies": {
-    "@datadog/browser-core": "2.15.1",
-    "@datadog/browser-rum-core": "2.15.1"
+    "@datadog/browser-core": "^2.15.1",
+    "@datadog/browser-rum-core": "^2.15.1",
+    "react": ">=16",
+    "react-router-dom": "^5.0.0"
   },
   "resolutions": {
     "@types/react": "16"
   },
   "devDependencies": {
-    "@datadog/browser-core": "2.15.1",
-    "@datadog/browser-rum-core": "2.15.1",
+    "@datadog/browser-core": "^2.15.1",
+    "@datadog/browser-rum-core": "^2.15.1",
     "@testing-library/react": "12.0.0",
     "@types/jest": "^26.0.24",
     "@types/node": "^16.0.0",
@@ -51,6 +52,7 @@
     "prettier": "2.2.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-router-dom": "^5.0.0",
     "ts-loader": "8.0.18",
     "tsconfig-paths-webpack-plugin": "3.5.1",
     "typescript": "4.1.5",

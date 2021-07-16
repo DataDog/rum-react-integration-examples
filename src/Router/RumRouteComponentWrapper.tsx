@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { isValidElement, useRef } from 'react';
+import type { ReactElement } from 'react';
 import type { RouteProps, RouteComponentProps } from 'react-router-dom';
 
 type RumRouteComponentType =
@@ -20,7 +21,7 @@ function isFunctionComponent(
   return (
     typeof component === 'function' &&
     component.hasOwnProperty('props') &&
-    React.isValidElement(component)
+    isValidElement(component)
   );
 }
 
@@ -36,10 +37,7 @@ function getComponentName(component: RumRouteComponentType): string | null {
     maybeComponentName = component.displayName;
   } else if (isFunctionComponent(component)) {
     maybeComponentName = component.name;
-  } else if (
-    React.isValidElement(component) &&
-    typeof component.type !== 'string'
-  ) {
+  } else if (isValidElement(component) && typeof component.type !== 'string') {
     maybeComponentName = component.type.name;
   }
 
@@ -47,29 +45,29 @@ function getComponentName(component: RumRouteComponentType): string | null {
 }
 
 export const withRum = (component: RumRouteComponentType) =>
-  component
-    ? (props: RouteComponentProps): React.ReactNode => {
-        // Makes the code run _before_ render, similar to a constructor in Class Components
-        // Otherwise, all children startViews will be called before the parents
-        React.useRef(
-          (() => {
-            if (window.DD_RUM?.startView) {
-              const maybeComponentName = getComponentName(component);
+  function RumView(props: RouteComponentProps): ReactElement {
+    // Makes the code run _before_ render, similar to a constructor in Class Components
+    // Otherwise, all children startViews will be called before the parents
+    useRef(
+      (() => {
+        if (window.DD_RUM?.startView) {
+          const maybeComponentName = getComponentName(component);
 
-              if (maybeComponentName) {
-                window.DD_RUM.startView(maybeComponentName);
-              }
-            }
-          })()
-        );
-
-        if (isReactRouterComponent(component)) {
-          const Component = component;
-          return <Component {...props} />;
-        } else if (component instanceof Function) {
-          return component(props);
+          if (maybeComponentName) {
+            window.DD_RUM.startView(maybeComponentName);
+          }
         }
+      })()
+    );
 
-        return component;
-      }
-    : component;
+    if (!component) {
+      return <>{component}</>;
+    } else if (isReactRouterComponent(component)) {
+      const Component = component;
+      return <Component {...props} />;
+    } else if (component instanceof Function) {
+      return <>{component(props)}</>;
+    }
+
+    return <>{component}</>;
+  };

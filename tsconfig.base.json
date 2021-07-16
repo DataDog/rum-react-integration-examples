@@ -9,7 +9,7 @@
     "strict": true,
     "target": "es5",
     "sourceMap": true,
-		"jsx": "react",
+    "jsx": "react-jsx",
     "types": [
       "node",
       "jest"
