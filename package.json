@@ -13,6 +13,7 @@
     "build:esm": "rm -rf esm && tsc -p tsconfig.esm.json",
     "format": "prettier --check .",
     "lint": "scripts/cli lint .",
+    "prepare": "run-s build",
     "typecheck": "scripts/cli typecheck . && scripts/cli typecheck developer-extension",
     "test": "jest"
   },
