@@ -1,4 +1,4 @@
-import { isValidElement, useRef } from 'react';
+import { isValidElement, useState } from 'react';
 import type { ReactElement } from 'react';
 import type { RouteProps, RouteComponentProps } from 'react-router-dom';
 
@@ -48,17 +48,15 @@ export const withRum = (component: RumRouteComponentType) =>
   function RumView(props: RouteComponentProps): ReactElement {
     // Makes the code run _before_ render, similar to a constructor in Class Components
     // Otherwise, all children startViews will be called before the parents
-    useRef(
-      (() => {
-        if (window.DD_RUM?.startView) {
-          const maybeComponentName = getComponentName(component);
+    useState(() => {
+      if (window.DD_RUM?.startView) {
+        const maybeComponentName = getComponentName(component);
 
-          if (maybeComponentName) {
-            window.DD_RUM.startView(maybeComponentName);
-          }
+        if (maybeComponentName) {
+          window.DD_RUM.startView(maybeComponentName);
         }
-      })()
-    );
+      }
+    });
 
     if (!component) {
       return <>{component}</>;
