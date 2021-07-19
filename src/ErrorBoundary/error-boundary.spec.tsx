@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { ErrorBoundary } from './errorBoundary';
+import { ErrorBoundary } from './ErrorBoundary';
 
 const Throws = () => {
   throw new Error('Oh no!');
