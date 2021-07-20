@@ -31,10 +31,7 @@ function isReactRouterComponent(
   return isClassComponent(component) || isFunctionComponent(component);
 }
 
-export const withRum = (
-  component: RumRouteComponentType,
-  path: RouteProps['path']
-) =>
+export const withRum = (component: RumRouteComponentType) =>
   function RumView(props: RouteComponentProps) {
     useRef(
       (() => {
@@ -65,9 +62,7 @@ export const withRum = (
           return;
         }
 
-        if (path && typeof path === 'string') {
-          globalObj.DD_RUM.startView(path);
-        }
+        globalObj.DD_RUM.startView(props.match.path);
       })()
     );
 
