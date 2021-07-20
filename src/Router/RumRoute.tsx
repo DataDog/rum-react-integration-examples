@@ -14,7 +14,7 @@ export const RumRoute = ({
 }: RumRouteProps) => {
   const RumComponent = useMemo(() => {
     // this is react-router priority
-    return withRum(children ?? component ?? render);
+    return withRum(children ?? component ?? render, otherProps.path);
   }, [children, component, render]);
 
   return <Route {...otherProps} component={RumComponent} />;

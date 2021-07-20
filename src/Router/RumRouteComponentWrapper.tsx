@@ -1,5 +1,4 @@
-import { isValidElement, useState } from 'react';
-import type { ReactElement } from 'react';
+import { isValidElement, useRef } from 'react';
 import type { RouteProps, RouteComponentProps } from 'react-router-dom';
 import { getGlobalObject } from '../utils/getGlobalObject';
 
@@ -32,33 +31,45 @@ function isReactRouterComponent(
   return isClassComponent(component) || isFunctionComponent(component);
 }
 
-function getComponentName(component: RumRouteComponentType): string | null {
-  let maybeComponentName = null;
-  if (component && isReactRouterComponent(component)) {
-    maybeComponentName = component.displayName;
-  } else if (isFunctionComponent(component)) {
-    maybeComponentName = component.name;
-  } else if (isValidElement(component) && typeof component.type !== 'string') {
-    maybeComponentName = component.type.name;
-  }
+export const withRum = (
+  component: RumRouteComponentType,
+  path: RouteProps['path']
+) =>
+  function RumView(props: RouteComponentProps) {
+    useRef(
+      (() => {
+        const globalObj = getGlobalObject<Window>();
 
-  return maybeComponentName ?? null;
-}
-
-export const withRum = (component: RumRouteComponentType) =>
-  function RumView(props: RouteComponentProps): ReactElement {
-    // Makes the code run _before_ render, similar to a constructor in Class Components
-    // Otherwise, all children startViews will be called before the parents
-    useState(() => {
-      const globalObj = getGlobalObject<Window>();
-      if (globalObj.DD_RUM?.startView) {
-        const maybeComponentName = getComponentName(component);
-
-        if (maybeComponentName) {
-          globalObj.DD_RUM.startView(maybeComponentName);
+        if (!globalObj.DD_RUM) {
+          console.warn(
+            '@datadog/rum-react-integration: Datadog RUM SDK is not initialized.'
+          );
+          return;
         }
-      }
-    });
+
+        if (!globalObj.DD_RUM?.startView) {
+          console.warn(
+            '@datadog/rum-react-integration: Manual tracking not supported. Try updating the Datadog RUM SDK.'
+          );
+          return;
+        }
+
+        const manualTracking = !!globalObj.DD_RUM?.getInitConfiguration()
+          ?.trackViewsManually;
+        if (!manualTracking) {
+          console.warn(
+            '@datadog/rum-react-integration: The trackViewsManually flag in RUM initialization must be set to %ctrue%c.',
+            'color:green',
+            'color:default'
+          );
+          return;
+        }
+
+        if (path && typeof path === 'string') {
+          globalObj.DD_RUM.startView(path);
+        }
+      })()
+    );
 
     if (!component) {
       return <>{component}</>;
