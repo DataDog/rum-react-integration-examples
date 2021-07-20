@@ -5,10 +5,6 @@ import { RumActionContext } from './rum-action-context';
 
 /**
  * Context Provider to add a new component to the action breadcrumbs. Useful for class Components.
- * /!\ Prefer using WithRumActionContext since it'll wrap all lines of your component with the new context, even the hooks called before render.
- *
- * {@link https://datadoghq.atlassian.net/wiki/spaces/FRON/pages/1832059156/User+Action+Tracking|User Action Tracking Documentation}
- * @param props - ComponentName - Name of the component to add
  */
 export const RumActionContextProvider: React.FunctionComponent<{
     componentName: string;
@@ -52,10 +48,6 @@ export const RumActionContextProvider: React.FunctionComponent<{
 /**
  * Decorator to add a new component to the action breadcrumbs when using useRumAction or useRumTracking action hooks
  * the decorator is better than a just component because it will add the context to everything in your component
- *
- * {@link https://datadoghq.atlassian.net/wiki/spaces/FRON/pages/1832059156/User+Action+Tracking|User Action Tracking Documentation}
- * @param componentName - Name of the component, will be added to breadcrumbs and component facet for actions
- * @param component - Component to wrap
  */
 export function BreadCrumbs<PropsType>(
     componentName: string,
