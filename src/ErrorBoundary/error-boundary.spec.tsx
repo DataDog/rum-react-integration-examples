@@ -1,6 +1,8 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
+import { getGlobalObject } from '../utils/getGlobalObject';
 import { ErrorBoundary } from './ErrorBoundary';
+
+const globalObj = getGlobalObject<Window>();
 
 const Throws = () => {
   throw new Error('Oh no!');
@@ -15,7 +17,7 @@ describe('ErrorBoundary', () => {
     addErrorSpy = jest.fn();
 
     global.window.onerror = onErrorSpy;
-    rumAgent = {
+    globalObj.DD_RUM = {
       addError: addErrorSpy,
     } as any;
   });

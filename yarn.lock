@@ -324,7 +324,7 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@datadog/browser-core@2.17.0", "@datadog/browser-core@^2.15.1":
+"@datadog/browser-core@2.17.0":
   version "2.17.0"
   resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-2.17.0.tgz#67093bcbfa0c7b664dbf04170ac558fb0f700e12"
   integrity sha512-jGIiVIzxdfQ+FnuFY+tC/j4gBFmK74xW/NIVqHIdN/hbGqA0oXOYs3Qof39ILLhXM5+zxa44RYFY6r/9JaxMIg==
@@ -2075,7 +2075,7 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
-history@^4.9.0:
+history@4, history@^4.9.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/history/-/history-4.10.1.tgz#33371a65e3a83b267434e2b3f3b1b4c58aad4cf3"
   integrity sha512-36nwAD620w12kuzPAsyINPWJqlNbij+hpK1k9XRloDtym8mxzGYl2c17LnV6IAGB2Dmg4tEa7G7DlawS0+qjew==
