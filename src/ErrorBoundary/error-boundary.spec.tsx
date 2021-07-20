@@ -15,7 +15,7 @@ describe('ErrorBoundary', () => {
     addErrorSpy = jest.fn();
 
     global.window.onerror = onErrorSpy;
-    global.window.DD_RUM = {
+    rumAgent = {
       addError: addErrorSpy,
     } as any;
   });
