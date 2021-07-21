@@ -2,7 +2,7 @@ import type { RumPublicApi } from '@datadog/browser-rum-core'
 
 export { ErrorBoundary } from './ErrorBoundary'
 export { RumRoute } from './Router'
-export { BreadCrumbs, useRumError, useRumAction } from './BreadCrumbs'
+export { BreadCrumbs, RumComponentContextProvider, useRumError, useRumAction } from './BreadCrumbs'
 
 declare global {
   interface Window {

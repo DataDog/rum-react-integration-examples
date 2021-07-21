@@ -1,14 +1,14 @@
 import { useContext } from 'react';
 
-import { RumActionContext } from './rum-action-context';
+import { RumComponentContext } from './rum-component-context';
 import { getGlobalObject } from '../utils/getGlobalObject';
 
 /**
- * Utility to track errors in RUM with the component chain/breadcrumbs from <RumActionContextProvider> automatically added
+ * Utility to track errors in RUM with the component chain/breadcrumbs from <RumComponentContextProvider> automatically added
  *
  */
 export const useRumError = () => {
-    const actionContext = useContext(RumActionContext);
+    const componentContext = useContext(RumComponentContext);
     const RumGlobal = getGlobalObject<Window>().DD_RUM
 
     if (!RumGlobal) {
@@ -22,11 +22,11 @@ export const useRumError = () => {
         RumGlobal.addError(
             error,
             {
-                ...actionContext.customAttributes,
+                ...componentContext.customAttributes,
                 ...customAttributes,
                 react: {
-                    breadcrumbs: actionContext.componentBreadCrumbs,
-                    component: actionContext.component,
+                    breadcrumbs: componentContext.componentBreadCrumbs,
+                    component: componentContext.component,
                     ...(customAttributes as any)?.react
                 }
             },
