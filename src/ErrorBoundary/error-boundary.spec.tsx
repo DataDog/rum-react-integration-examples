@@ -2,6 +2,12 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ErrorBoundary } from './ErrorBoundary';
 
+import { getGlobalObject } from '../utils/getGlobalObject';
+
+jest.mock('../utils/getGlobalObject', () => ({
+    getGlobalObject: jest.fn()
+}));
+
 const Throws = () => {
   throw new Error('Oh no!');
 };
@@ -9,6 +15,10 @@ const Throws = () => {
 describe('ErrorBoundary', () => {
   let onErrorSpy: jest.Mock;
   let addErrorSpy: jest.Mock;
+
+  let rumAgent: {
+    addError: ()=>void
+  };
 
   beforeEach(() => {
     onErrorSpy = jest.fn();
@@ -18,6 +28,10 @@ describe('ErrorBoundary', () => {
     rumAgent = {
       addError: addErrorSpy,
     } as any;
+
+   (getGlobalObject as jest.Mock).mockReturnValue({
+     DD_RUM: rumAgent
+   });
   });
 
   afterEach(() => {
