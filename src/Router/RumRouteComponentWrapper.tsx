@@ -35,6 +35,10 @@ export const withRum = (component: RumRouteComponentType) =>
   function RumView(props: RouteComponentProps) {
     useRef(
       (() => {
+        if (!component) {
+          return;
+        }
+
         const globalObj = getGlobalObject<Window>();
 
         if (!globalObj.DD_RUM) {

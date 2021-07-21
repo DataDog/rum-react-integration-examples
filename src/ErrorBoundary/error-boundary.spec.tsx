@@ -1,8 +1,6 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { ErrorBoundary } from './ErrorBoundary';
-
 import { getGlobalObject } from '../utils/getGlobalObject';
+import { ErrorBoundary } from './ErrorBoundary';
 
 jest.mock('../utils/getGlobalObject', () => ({
     getGlobalObject: jest.fn()
