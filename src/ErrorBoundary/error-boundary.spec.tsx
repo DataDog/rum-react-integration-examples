@@ -15,7 +15,7 @@ describe('ErrorBoundary', () => {
   let addErrorSpy: jest.Mock;
 
   let rumAgent: {
-    addError: ()=>void
+    addError: () => void
   };
 
   beforeEach(() => {
