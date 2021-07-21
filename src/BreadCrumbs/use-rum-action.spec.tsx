@@ -1,5 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import * as React from 'react';
+import React from 'react';
+
+import { RumComponentContextProvider } from './BreadCrumbs';
 
 import { useRumAction } from './use-rum-action';
 
@@ -56,6 +58,40 @@ describe('useRumAction', () => {
                 "react": Object {
                   "breadcrumbs": "root",
                   "component": "root",
+                },
+              },
+            ]
+        `);
+    });
+
+    it('should use the context to fill element and breadcrumbs', () => {
+        const wrapper: React.FunctionComponent = ({ children }) => (<RumComponentContextProvider componentName="ComponentToTrack">{children}</RumComponentContextProvider>);
+
+        const {
+            result: { current: addRumAction }
+        } = renderHook(() => useRumAction("action-fou-tracking"), { wrapper });
+        act(() => {
+            addRumAction('test-element', {
+                customAttr1: 'fou', 
+                customAttr2: 'fou'
+            });
+        });
+
+        expect(rumAgent.addAction).toHaveBeenCalledTimes(1);
+        expect(
+            (rumAgent.addAction as jest.MockedFunction<
+                typeof rumAgent.addAction
+            >).mock.calls[0]
+        ).toMatchInlineSnapshot(`
+            Array [
+              "test-element",
+              Object {
+                "customAttr1": "fou",
+                "customAttr2": "fou",
+                "purpose": "action-fou-tracking",
+                "react": Object {
+                  "breadcrumbs": "root.ComponentToTrack",
+                  "component": "ComponentToTrack",
                 },
               },
             ]

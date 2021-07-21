@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface ActionContext {
+export interface ComponentContext {
     /**
      * list of all parent components, separated by .
      */
@@ -19,7 +19,7 @@ export interface ActionContext {
     customTrackingAttributes?: object;
 }
 
-export const RumActionContext = React.createContext<ActionContext>({
+export const RumComponentContext = React.createContext<ComponentContext>({
     componentBreadCrumbs: 'root',
     component: 'root'
 });

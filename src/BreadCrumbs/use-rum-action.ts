@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 
-import { RumActionContext } from './rum-action-context';
+import { RumComponentContext } from './rum-component-context';
 import { getGlobalObject } from '../utils/getGlobalObject';
 
 /**
- * Utility to track actions in RUM with the component chain/breadcrumbs from <RumActionContextProvider> automatically added
+ * Utility to track actions in RUM with the component chain/breadcrumbs from <RumComponentContextProvider> automatically added
  *
  * add a "purpose" to the custom attributes to group the actions
  *
@@ -14,7 +14,7 @@ import { getGlobalObject } from '../utils/getGlobalObject';
 export const useRumAction = (
     purpose: string = 'unknown'
 ) => {
-    const actionContext = useContext(RumActionContext);
+    const componentContext = useContext(RumComponentContext);
     const RumGlobal = getGlobalObject<Window>().DD_RUM
 
     if (!RumGlobal) {
@@ -27,11 +27,11 @@ export const useRumAction = (
     return (name: string, customAttributes?: object) => {
         RumGlobal.addAction(name, {
             purpose,
-            ...actionContext.customAttributes,
+            ...componentContext.customAttributes,
             ...customAttributes,
             react: {
-                breadcrumbs: actionContext.componentBreadCrumbs,
-                component: actionContext.component,
+                breadcrumbs: componentContext.componentBreadCrumbs,
+                component: componentContext.component,
                 ...(customAttributes as any)?.react
             }
         });

@@ -1,12 +1,12 @@
 import React, { useContext, useMemo } from 'react';
 
-import type { ActionContext } from './rum-action-context';
-import { RumActionContext } from './rum-action-context';
+import type { ComponentContext } from './rum-component-context';
+import { RumComponentContext} from './rum-component-context';
 
 /**
  * Context Provider to add a new component to the action breadcrumbs. Useful for class Components.
  */
-export const RumActionContextProvider: React.FunctionComponent<{
+export const RumComponentContextProvider: React.FunctionComponent<{
     componentName: string;
     customAttributes?: object;
     customTrackingAttributes?: object;
@@ -16,8 +16,8 @@ export const RumActionContextProvider: React.FunctionComponent<{
     customTrackingAttributes,
     children
 }) => {
-    const parentContext = useContext(RumActionContext);
-    const newContext = useMemo<ActionContext>(
+    const parentContext = useContext(RumComponentContext);
+    const newContext = useMemo<ComponentContext>(
         () => ({
             component: componentName,
             customAttributes: {
@@ -40,9 +40,9 @@ export const RumActionContextProvider: React.FunctionComponent<{
         ]
     );
     return (
-        <RumActionContext.Provider value={newContext}>
+        <RumComponentContext.Provider value={newContext}>
             {children}
-        </RumActionContext.Provider>
+        </RumComponentContext.Provider>
     );
 };
 /**
@@ -73,13 +73,13 @@ export function BreadCrumbs<PropsType>(
     }
     return (props: PropsType) => {
         return (
-            <RumActionContextProvider
+            <RumComponentContextProvider
                 componentName={componentName}
                 customAttributes={options.customAttributes}
                 customTrackingAttributes={options.customTrackingAttributes}
             >
                 <Component {...props} />
-            </RumActionContextProvider>
+            </RumComponentContextProvider>
         );
     };
 }
