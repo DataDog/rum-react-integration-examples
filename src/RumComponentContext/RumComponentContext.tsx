@@ -9,11 +9,9 @@ import { RumComponentContext} from './rum-component-context';
 export const RumComponentContextProvider: React.FunctionComponent<{
     componentName: string;
     customAttributes?: object;
-    customTrackingAttributes?: object;
 }> = ({
     componentName,
     customAttributes,
-    customTrackingAttributes,
     children
 }) => {
     const parentContext = useContext(RumComponentContext);
@@ -24,19 +22,13 @@ export const RumComponentContextProvider: React.FunctionComponent<{
                 ...parentContext.customAttributes,
                 ...customAttributes
             },
-            customTrackingAttributes: {
-                ...parentContext.customTrackingAttributes,
-                ...customTrackingAttributes
-            },
             componentBreadCrumbs: `${parentContext.componentBreadCrumbs}.${componentName}`
         }),
         [
             componentName,
             parentContext.componentBreadCrumbs,
             parentContext.customAttributes,
-            parentContext.customTrackingAttributes,
-            customAttributes,
-            customTrackingAttributes
+            customAttributes
         ]
     );
     return (
@@ -46,7 +38,7 @@ export const RumComponentContextProvider: React.FunctionComponent<{
     );
 };
 /**
- * Decorator to add a new component to the action breadcrumbs when using useRumAction or useRumTracking action hooks
+ * Decorator to add a new component to the breadcrumbs when using useRumAction or useRumTracking action hooks
  * the decorator is better than a just component because it will add the context to everything in your component
  */
 export function WithRumComponentContext<PropsType>(
@@ -54,7 +46,6 @@ export function WithRumComponentContext<PropsType>(
     options:
         | {
               customAttributes?: object;
-              customTrackingAttributes?: object;
           }
         | undefined,
     Component: React.FunctionComponent<PropsType>
@@ -76,7 +67,6 @@ export function WithRumComponentContext<PropsType>(
             <RumComponentContextProvider
                 componentName={componentName}
                 customAttributes={options.customAttributes}
-                customTrackingAttributes={options.customTrackingAttributes}
             >
                 <Component {...props} />
             </RumComponentContextProvider>

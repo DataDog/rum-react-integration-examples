@@ -13,10 +13,6 @@ export interface ComponentContext {
      * custom attributes passed to all actions under this context
      */
     customAttributes?: object;
-    /**
-     * custom attributes passed to all tracking actions under this context
-     */
-    customTrackingAttributes?: object;
 }
 
 export const RumComponentContext = React.createContext<ComponentContext>({
