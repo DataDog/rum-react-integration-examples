@@ -8,9 +8,9 @@ This package is used in conjunction with the [RUM SDK](https://github.com/DataDo
 
 This repository contains several utilities:
 
-| Package              | doc                |
+| Package              | Docs                |
 |----------------------|--------------------|
-| Rum Breadcrumbs      | [![API][1]][01]    |
+| Rum Component Context| [![API][1]][01]    |
 | Error Boundaries     | [![API][1]][02]    |
 | React Router Tracker | [![API][1]][03]    |
 
