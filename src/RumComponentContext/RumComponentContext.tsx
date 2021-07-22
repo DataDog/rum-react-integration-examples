@@ -49,7 +49,7 @@ export const RumComponentContextProvider: React.FunctionComponent<{
  * Decorator to add a new component to the action breadcrumbs when using useRumAction or useRumTracking action hooks
  * the decorator is better than a just component because it will add the context to everything in your component
  */
-export function BreadCrumbs<PropsType>(
+export function WithRumComponentContext<PropsType>(
     componentName: string,
     options:
         | {
@@ -59,17 +59,17 @@ export function BreadCrumbs<PropsType>(
         | undefined,
     Component: React.FunctionComponent<PropsType>
 ): React.FunctionComponent<PropsType>;
-export function BreadCrumbs<PropsType>(
+export function WithRumComponentContext<PropsType>(
     componentName: string,
     Component: React.FunctionComponent<PropsType>
 ): React.FunctionComponent<PropsType>;
-export function BreadCrumbs<PropsType>(
+export function WithRumComponentContext<PropsType>(
     componentName: string,
     options: any,
     Component?: React.FunctionComponent<PropsType>
 ): React.FunctionComponent<PropsType> {
     if (typeof Component === 'undefined') {
-        return BreadCrumbs(componentName, {}, options);
+        return WithRumComponentContext(componentName, {}, options);
     }
     return (props: PropsType) => {
         return (
