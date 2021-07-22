@@ -13,7 +13,7 @@ interface ErrorBoundaryState {
 }
 
 export interface ErrorBoundaryProps {
-  render: (errorMessage: string, error: Error) => React.ReactNode
+  renderError: (errorMessage: string, error: Error) => React.ReactNode
   errorMessage: string
   scope?: string
 }
@@ -57,12 +57,12 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
   render() {
     const { hasError, error } = this.state
-    const { errorMessage, render } = this.props
+    const { errorMessage, renderError } = this.props
 
     if (!hasError || !error) {
       return this.props.children
     }
 
-    return render(errorMessage, error)
+    return renderError(errorMessage, error)
   }
 }

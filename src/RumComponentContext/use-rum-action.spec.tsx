@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import React from 'react';
 
-import { RumComponentContextProvider } from './BreadCrumbs';
+import { RumComponentContextProvider } from './RumComponentContext';
 
 import { useRumAction } from './use-rum-action';
 

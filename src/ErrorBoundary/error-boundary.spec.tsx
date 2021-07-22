@@ -41,7 +41,7 @@ describe('ErrorBoundary', () => {
   it('sends errors to addError', () => {
     render(
       <ErrorBoundary
-        render={ErrorRenderer}
+        renderError={ErrorRenderer}
         errorMessage="Houston we've got a problem"
       >
         <Throws />
