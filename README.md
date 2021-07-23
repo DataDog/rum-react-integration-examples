@@ -11,10 +11,10 @@ This repository contains several utilities:
 | Package              | Docs                |
 |----------------------|--------------------|
 | Rum Component Context| [![API][1]][01]    |
-| Error Boundaries     | [![API][1]][02]    |
+| Error Boundary       | [![API][1]][02]    |
 | React Router Tracker | [![API][1]][03]    |
 
 [1]: https://github.githubassets.com/favicons/favicon.png
 [01]: https://github.com/DataDog/rum-react-integration/tree/master/src/RumComponentContext
-[02]: https://github.com/DataDog/rum-react-integration/tree/master/src/ErrorBoundaries
+[02]: https://github.com/DataDog/rum-react-integration/tree/master/src/ErrorBoundary
 [03]: https://github.com/DataDog/rum-react-integration/tree/master/src/Router
