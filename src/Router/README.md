@@ -1,30 +1,45 @@
 # Datadog RUM React Router Integration
 
 ## Overview
-React Router v5 Integration to report routes matched path as views
+[Datadog Real User Monitoring](https://www.datadoghq.com/product/real-user-monitoring/) integration with React Router V5. With each route change, the RUM SDK automates the creation of a new RUM view with the route path as the view name. This improves the naming of your pages in the RUM product and results in simplified analysis.
+
+| Default RUM names                                                                                                                                                     | React-Router integration                                                                                                                                                          |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ![default RUM view names)](https://p-qkfgo2.t2.n0.cdn.getcloudapp.com/items/jkuPxAbd/736233cf-b448-4b71-9cd1-52bb7183fc1c.png?v=d45828ff76ac00dec333aba5077781cb) | ![react router integration RUM view names)](https://p-qkfgo2.t2.n0.cdn.getcloudapp.com/items/yAurdJOW/8bacc9e5-5361-4836-9c85-ab8bb53ed40f.png?v=ab2dd75359a2cb3c16dc2c8c3a82493c) |
 
 ## Setup
-1. Have Datadog RUM SDK up and running. [Instructions](https://github.com/DataDog/browser-sdk/blob/main/packages/rum/README.md);
-2. In your RUM SDK initialization (`DD_RUM.init` calls), pass `trackViewsManually: true`; 
-3. Add this repository to your project with `yarn add https://github.com/DataDog/rum-react-integration`;
-4. Replace the necessary `<Route />` usage by `<RumRoute />`. You can mix original React-Router's `<Route />` with `<RumRoute />` to track only the desired paths.
+1. [Set up RUM browser](https://docs.datadoghq.com/real_user_monitoring/browser/#setup).
+2. Initialize RUM with `trackViewsManually: true`:
+```javascript
+import { datadogRum } from '@datadog/browser-rum';
 
-## Import Options    
-You can import with:
+datadogRum.init({
+    ...,
+    trackViewsManually: true,
+    ...
+});
 ```
+3. Include this package in your project. (`yarn add https://github.com/DataDog/rum-react-integration`).
+4. Replace all the occurences of `<Route />` with `<RumRoute />`.
+
+**Note**: Without the change, existing react-router `<Route />` components do not trigger a new RUM view. Resources, actions and errors are still collected and attributed to the active RUM view.
+
+## Importing the package
+Import this package with the following command:
+```javascript
 import { RumRoute } from '@datadog/rum-react-integration';
 ```
 
-Or use an alias for React Router's `<Route />` with:
-```
+Alternatively, you may want to use an alias:
+```javascript
 import { RumRoute as Route } from '@datadog/rum-react-integration';
 ```
 
 ## Props
-It inherits the same props available to the original React-Router's `<Route>` component. As seen [here](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react-router/index.d.ts#L86). Further examples can be found [here](https://reactrouter.com/web/api/Route).
+The `<Route \>` component inherits the same props available on the original react-router `<Route \>` component. Find more details in the [official react-router documentation](https://reactrouter.com/web/api/Route).
 
 ## Usage example
-```
+```jsx
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -35,8 +50,8 @@ import { Menu } from './Menu';
 import { Gallery } from './Gallery';
 export function App() {
   return (
-    <Router>
-      <div className="App">
+    <div className="App">
+      <Router>
         <Menu />
         <RumRoute path="/">
           <Home />
@@ -47,21 +62,14 @@ export function App() {
         <RumRoute path="/about">
           <About />
         </RumRoute>
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 }
 ```
 
 ### Notes on `trackViewsManually`
-While this is not mandatory to use this package, it is highly recommended to do so, since views that are automatically tracked will *also* be reported whenever there's a view change. Disabling it makes `<RumRoute />` control the tracking of views by itself.
+By default, the RUM SDK automatically tracks page changes using the History API. `trackViewsManually` ensures you are delegating the responsibility of creating new RUM views to the router only. Not setting `trackViewsManually` results in most RUM views appearing twice.
 
 ### Notes on `React.StrictMode`
-Using React.StrictMode will cause doubled logs appearing in Datadog's RUM Explorer. While it doesn't affect production builds, it can be particularly annoying and misleading while working on new features or debugging. 
-
-We recommend including a [context attribute](https://docs.datadoghq.com/real_user_monitoring/browser/modifying_data_and_context/?tab=npm#global-context) in development sessions in order to exclude these from real users data, or avoid initializing the SDK while in development mode.
-
-Read more about React.StrictMode [here](https://reactjs.org/docs/strict-mode.html)
-
-## Expected Results
-Your views `@view.name` facets will be populated with [React Routers paths patterns](https://reactrouter.com/web/api/Route/path-string-string), instead of Datadog RUM's automatic [url_path_group](https://reactrouter.com/web/api/Route/path-string-string) assumptions.
+If you are using [React.StrictMode](https://reactjs.org/docs/strict-mode.html), RUM views get duplicated **only in development mode, not in production mode**. This is due to [lifecycles being double invoked](https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects).
