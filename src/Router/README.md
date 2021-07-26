@@ -22,6 +22,8 @@ datadogRum.init({
 3. Include this package in your project. (`yarn add https://github.com/DataDog/rum-react-integration`).
 4. Replace all the occurences of `<Route />` with `<RumRoute />`.
 
+**Note**: Without the change, existing react-router `<Route />` components do not trigger a new RUM view. Resources, actions and errors are still collected and attributed to the active RUM view.
+
 ## Importing the package
 Import this package with the following command:
 ```javascript
@@ -34,7 +36,7 @@ import { RumRoute as Route } from '@datadog/rum-react-integration';
 ```
 
 ## Props
-The `<Route>` component inherits the same props available on the original react-router `<Route>` component. Find more details in the [official react-router documentation](https://reactrouter.com/web/api/Route).
+The `<Route \>` component inherits the same props available on the original react-router `<Route \>` component. Find more details in the [official react-router documentation](https://reactrouter.com/web/api/Route).
 
 ## Usage example
 ```jsx
