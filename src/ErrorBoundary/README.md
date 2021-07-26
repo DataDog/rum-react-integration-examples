@@ -16,11 +16,8 @@ import { ErrorBoundary } from '@datadog/rum-react-integration';
 Components that are expected to [throw](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw) an [error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) can be wrapped with ErrorBoundary to avoid crashing the rest of application.
 
 ## Props
-`renderError: (errorMessage: string, error: Error) => React.ReactNode`
-> The render method called when an exception is thrown within the ErrorBoundary. It receives the same errorMessage prop and the thrown error
-
-`errorMessage: string`
-> The message that will be displayed instead of the original children content when an error occurs. 
+`fallback: React.ReactNode | (error: Error) => React.ReactNode`
+> The render method called when an exception is thrown within the ErrorBoundary. It receives the Error instance that triggered it.
 
 ## Example
 
@@ -35,8 +32,7 @@ export function App() {
     <div className="App">
         <Menu />
         <ErrorBoundary
-            renderError={(errorMessage) => <h1>{errorMessage}</h1>}
-            errorMessage="Houston we've got a problem"
+            fallback={(error) => <div>Houston we've got a problem with the gallery: {error.message}</div>}
         >
             <Gallery />
         </ErrorBoundary>

@@ -1,6 +1,8 @@
-import React from 'react'
+import {ReactNode, Component, isValidElement} from 'react'
 
 import { getGlobalObject } from '../utils/getGlobalObject';
+
+type FallbackRenderer = (error: Error) => React.ReactNode
 
 interface InfoType {
   componentStack: string
@@ -13,15 +15,14 @@ interface ErrorBoundaryState {
 }
 
 export interface ErrorBoundaryProps {
-  renderError: (errorMessage: string, error: Error) => React.ReactNode
-  errorMessage: string
+  fallback: ReactNode | FallbackRenderer
   scope?: string
 }
 
 /**
  * ErrorBoundary component sends enriched errors to RUM.
  */
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   static defaultProps = {
     scope: 'error-boundary',
   }
@@ -57,12 +58,18 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
   render() {
     const { hasError, error } = this.state
-    const { errorMessage, renderError } = this.props
+    const { fallback } = this.props
 
     if (!hasError || !error) {
       return this.props.children
     }
 
-    return renderError(errorMessage, error)
+    if(isValidElement(fallback) || typeof fallback === 'string') {
+      return fallback
+    } else if(typeof fallback === 'function') {
+      return fallback(error)
+    }
+
+    return null
   }
 }
