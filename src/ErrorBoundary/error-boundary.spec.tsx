@@ -36,19 +36,18 @@ describe('ErrorBoundary', () => {
     jest.restoreAllMocks();
   });
 
-  const ErrorRenderer = () => <h1>Pretty error displayed</h1>;
+  const ErrorRenderer = (error: Error) => (
+    <h1>Pretty error displayed {error.message}</h1>
+  );
 
   it('sends errors to addError', () => {
     render(
-      <ErrorBoundary
-        renderError={ErrorRenderer}
-        errorMessage="Houston we've got a problem"
-      >
+      <ErrorBoundary fallback={ErrorRenderer}>
         <Throws />
       </ErrorBoundary>
     );
 
-    screen.getByText('Pretty error displayed');
+    screen.getByText(/Pretty error displayed/i);
     expect(onErrorSpy).toHaveBeenCalled();
     expect(addErrorSpy).toHaveBeenCalledTimes(1);
   });
