@@ -1,32 +1,28 @@
 # Datadog RUM React Error Boundary
 
 ## Overview
-Error boundary ensure that your errors stay scoped in it, not breaking the full React tree in case of error. For every error caught, an [`Error`](https://docs.datadoghq.com/real_user_monitoring/#error-tracking-and-crash-reporting) event will be sent to your Datadog dashboards and RUM Explorer.
+Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Learn more in the [official React documentation](https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries).
+In addition to displaying a fallback UI, this implementation sends the error to [Datadog Real User Monitoring](https://www.datadoghq.com/product/real-user-monitoring/) with all the error context.
+
+![RUM explorer error displayed in side panel](https://p-qkfgo2.t2.n0.cdn.getcloudapp.com/items/8Luov5Oy/e416f876-1439-47a1-9041-b203d1b320c5.png?v=483ac4fb359068414c7a2a82747ccef0)
 
 ## Setup
-1. Have Datadog RUM SDK up and running. [Instructions](https://github.com/DataDog/browser-sdk/blob/main/packages/rum/README.md);
-2. Add this repository to your project with `yarn add https://github.com/DataDog/rum-react-integration`;
-
-## Usage
-Import this utility with:
-```
-import { ErrorBoundary } from '@datadog/rum-react-integration';
-```
-
-Components that are expected to [throw](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw) an [error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) can be wrapped with ErrorBoundary to avoid crashing the rest of application.
+1. [Set up RUM browser](https://docs.datadoghq.com/real_user_monitoring/browser/#setup).
+2. Wrap React components with the `<ErrorBoundary />` component to start collecting more detailed errors.
 
 ## Props
 `fallback: React.ReactNode | (error: Error) => React.ReactNode`
-> The render method called when an exception is thrown within the ErrorBoundary. It receives the Error instance that triggered it.
+> (required) This render method is called when an exception is thrown within the ErrorBoundary. It receives the Error instance that triggered it.
 
-## Example
+## Usage example
 
-```
+```jsx
 import "./App.css";
 
 import { ErrorBoundary } from '@Datadog/rum-react-integration';
 
 import { Gallery } from './Gallery';
+
 export function App() {
   return (
     <div className="App">
@@ -40,6 +36,3 @@ export function App() {
   );
 }
 ```
-
-## Expected results
-Your errors will appear in Datadog's Dashboards and RUM Explorer, as they would appear by using [`addError`](https://docs.datadoghq.com/real_user_monitoring/browser/collecting_browser_errors/?tab=npm#collect-errors-manually). The wrapped UI in your application is expected to not crash, display any console errors, or not show any ominous error messages.
