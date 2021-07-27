@@ -4,7 +4,7 @@
 Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Learn more in the [official React documentation](https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries).
 In addition to displaying a fallback UI, this implementation sends the error to [Datadog Real User Monitoring](https://www.datadoghq.com/product/real-user-monitoring/) with all the error context.
 
-![RUM explorer error displayed in side panel](https://p-qkfgo2.t2.n0.cdn.getcloudapp.com/items/8Luov5Oy/e416f876-1439-47a1-9041-b203d1b320c5.png?v=483ac4fb359068414c7a2a82747ccef0)
+![RUM explorer error displayed in side panel](https://p-qkfgo2.t2.n0.cdn.getcloudapp.com/items/X6uAZR8R/181f1e93-8d52-4cdb-a22c-161934054859.png?v=92d481baf3bd9c1538f1816cadca3488)
 
 ## Setup
 1. [Set up RUM browser](https://docs.datadoghq.com/real_user_monitoring/browser/#setup).
