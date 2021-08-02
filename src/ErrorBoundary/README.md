@@ -19,6 +19,9 @@ Components that are expected to [throw](https://developer.mozilla.org/en-US/docs
 `fallback: React.ReactNode | (error: Error) => React.ReactNode`
 > The render method called when an exception is thrown within the ErrorBoundary. It receives the Error instance that triggered it.
 
+`scope?: string`
+> An optional [context](https://docs.datadoghq.com/real_user_monitoring/browser/collecting_browser_errors/?tab=npm#collect-errors-manually) string sent to Datadog in order to easily filter or group the thrown Errors.
+
 ## Example
 
 ```
