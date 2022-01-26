@@ -13,6 +13,7 @@ Once these contexts provided, any errors or actions generated within them will c
 
 1. Have Datadog RUM SDK up and running. [Instructions](https://github.com/DataDog/browser-sdk/blob/main/packages/rum/README.md);
 2. Add this repository to your project with `yarn add https://github.com/DataDog/rum-react-integration`;
+   + Optionally, you can copy the contents of this repo and adapt it to your needs.
 
 ## Usage
 

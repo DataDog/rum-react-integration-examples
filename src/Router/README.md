@@ -9,7 +9,9 @@
 
 ## Setup
 1. [Set up RUM browser](https://docs.datadoghq.com/real_user_monitoring/browser/#setup).
-2. Initialize RUM with `trackViewsManually: true`:
+2. Add this repository to your project with `yarn add https://github.com/DataDog/rum-react-integration`;
+   + Optionally, you can copy the contents of this repo and adapt it to your needs.
+3. Initialize RUM with `trackViewsManually: true`:
 ```javascript
 import { datadogRum } from '@datadog/browser-rum';
 
@@ -19,8 +21,8 @@ datadogRum.init({
     ...
 });
 ```
-3. Include this package in your project. (`yarn add https://github.com/DataDog/rum-react-integration`).
-4. Replace all the occurences of `<Route />` with `<RumRoute />`.
+4. Include this package in your project. (`yarn add https://github.com/DataDog/rum-react-integration`).
+5. Replace all the occurences of `<Route />` with `<RumRoute />`.
 
 **Note**: Without the change, existing react-router `<Route />` components do not trigger a new RUM view. Resources, actions and errors are still collected and attributed to the active RUM view.
 
