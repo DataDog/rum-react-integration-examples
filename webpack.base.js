@@ -1,5 +1,4 @@
 const path = require('path')
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const buildEnv = require('./scripts/build-env')
 
@@ -35,7 +34,6 @@ module.exports = ({ entry, mode, filename, types }) => ({
 
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
-    plugins: [new TsconfigPathsPlugin({ configFile: tsconfigPath })],
     alias: {
       // The default "pako.esm.js" build is not transpiled to es5
       pako: 'pako/dist/pako.es5.js',
